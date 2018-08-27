@@ -1,0 +1,476 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Building Chatbot with amazon lex and amazon lambda</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+    </head>
+    
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <section>
+                    <h2>Building Chatbot with amazon lex and amazon lambda</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>INTRODUCTION</h2>
+                        <div align='left'><p>What is a chatbot?</p></div>
+                        <span class="fragment"><p>
+                            <div align='left'>
+                                <i>A computer program designed to simulate conversation with human users, especially over the Internet.</i>
+                            </div>
+                            <div align='center'>
+                                <img src='img/xkcd-chatbot.jpg'>
+                            </div>                            
+                        </p></span>                    
+
+                        <aside class="notes">
+                            Propose the question to the audience to initate their participation. 
+                            Open the topic to discuss potential use cases for chatbots.
+                        </aside>                   
+                    </section>
+
+                    <section>
+                        <p>As virtual agents become more intelligent, performant and cost effective, they will start to permeate into our personal and work life.</p>
+                    </section>
+
+                    <section>                            
+                        <h4>Chatbots will augment our work:</h4>
+                        <ul>
+                            <li>IT Helpdesk</li>
+                            <li>Customer Care</li>
+                            <li>Mortgage Advisors</li>
+                            <li>Shopping Assistants</li>
+                        </ul>
+                    </section>
+
+                    <section>                        
+                        <h4>Chatbots are already becoming part of our every day lives:</h4>
+                        <ul>
+                            <li>Personal Assistants (Alexa, Google Assistant, Siri)</li>
+                            <li>Music / Show discovery</li>
+                            <li>News, Weather, Sports</li>
+                        </ul>    
+                    </section>
+                </section>
+
+                <section>
+                    <h2>INTRODUCTION</h2>
+                    <p>Building a chatbot with Amazon Web Service (AWS):</p>
+                    <img src="img/user-lex-lambda.jpg">
+                    <table>
+                        <col width="33%">
+                        <col width="33%">
+                        <col width="33%">
+                        <tbody>
+                        <tr>
+                            <th><p style="line-height:1">
+                                <small>Users interact with a chatbot via various channels:
+                                <ul>
+                                        <li>Text</li>
+                                        <li>Voice</li>
+                                        <li>Facebook</li>
+                                        <li>Kik</li>
+                                </ul>  
+                            </small></p> 
+                            </th>
+                            <th><p style="line-height:1"><small>Amazon <bold>Lex</bold> is the same conversational engine that powers Amazon Alexa.  It is used for building conversational interfaces for applications using voice and text.</small></p></th>
+                            <th><p style="line-height:1"><small>Amazon <bold>Lambda</bold> is used to run code with zero servers.  Also called <bold>serverless computing</bold>.</small></p></th>
+                        </tr>
+                    </tbody></table>
+                </section>
+
+                <section>
+                    <h2>
+                        Building chatbot with Amazon lex
+                    </h2>
+                    <small>
+                    <ul>
+                        <li>On top right, change region to US East (N.Virginia)</li>
+                        <li>Click <bold>Service</bold> &rArr; Amazon Lex</li>
+                        <li>Click Create</li>
+                        <li>Click Custom Bot</li>                
+                            <ul>
+                                <li>Bot Name: name of your bot (e.g. <i>&lt;yourname&gt;LunchBot)</i></li>
+                                <li>Output Voice: select any option</li>
+                                <li>Session timeout: 5 min</li>
+                                <li>IAM role: leave default</li>
+                                <li>COPPA: No</li>
+                            </ul>                        
+                    </ul>
+                    </small>
+                </section>
+
+                <section>
+                    <h2>
+                        Creating Intents
+                    </h2>
+                    <div align="left">
+                    <small>
+                    <p>
+                        An intent represents an action that the user wants to perform. You create a bot to support one or more related intents. For example, you might create a bot that orders pizza and drinks.
+                    </p>
+                    <br>
+                    <p>
+                        Intents contain Sample utterances specifying how a user might convey the intent. For example, a user might say "Can I order a pizza please" or "I want to order a pizza".
+                    </p>
+                    <br>
+                    <ul>
+                        <li>Click Create Intent</li>
+                        <li><i>Provide a name for your intent (e.g. LunchMenuintent)</i></li>
+                    </ul>
+                    </small>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Creating Intents</h2>
+                    <small>
+                    <ul>
+                        <li>Create an Sample utterance.</li>
+                        <ul>
+                            <li>Utterances are phrases that invoke your intent</li>
+                            <li><i>e.g. I want to know what’s for lunch</i></li>
+                            <li><i>e.g. What’s for lunch</i></li>
+                        </ul>
+                        <li>Slots store data that the use must provide</li>
+                        <ul>
+                            <li>Create a new slot:</li>
+                            <ul>
+                                <li>Name: Day <i>or</i> slotDay</li>
+                                <li>Slot type: AMAZON.DATE</li>
+                                <li>Prompt: For what day?</li>
+                            </ul>
+                            <li>You can reference a slot in utterance using {}</li>
+                            <ul>
+                                <li>e.g. What's for lunch on ​{Day}​</li>
+                            </ul>
+                        <li>Click Build</li>
+                        <li>Try it out!</li>
+                        </ul>
+                    </ul>
+                    </small>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>INTRODUCTION TO PYTHON</h2>
+                        <h4>Python Variables:</h4>
+                        <pre><code class="hljs" data-trim contenteditable>
+x = 5
+y = "John"
+                        </code></pre>
+                        <h4>Python Conditions:</h4>
+                        <pre><code class="hljs" data-trim contenteditable>
+a = 33
+b = 200
+if b > a:
+    print("b is greater than a")
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h4>Python Lists:</h4>
+                        <pre><code class="hljs" data-trim contenteditable>
+thislist = ["apple", "banana", "cherry"]
+thislist[1] = "blackcurrant"    # Change the second item
+                        </code></pre>
+                        <h4>Python Dictionary:</h4>
+                        <pre><code class="hljs" data-trim contenteditable>
+thisdict = {
+      "apple": "green",
+      "banana": "yellow",
+      "cherry": "red"
+}
+thisdict["apple"] = "red"	# Change apple color to red
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h4>Python Functions:</h4>
+                        <pre><code class="hljs" data-trim contenteditable>
+def my_function():
+    print("Hello from a function")
+    
+my_function()	# calling a function
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Creating Lambda Function</h2>
+                    <small>
+                        <ul>
+                            <li>Click on Services &rArr; Lambda</li>
+                            <li>Click on Create Function</li>
+                            <li>Select Author from scratch</li>
+                            <li>Name: <i>&lt;yourname&gt;LunchFunction</i></li>
+                            <li>Runtime: Python 3.6</li>
+                            <li>Role: Choose an existing role</li>
+                            <li>Existing role: SHAD_lamda_basic_execution</li>
+                            <li>Click on Create function</li>
+                        </ul>
+                    </small>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Creating Lambda Function</h2>
+                        <pre><code class="hljs" data-trim contenteditable>
+import datetime
+from dateutil.parser import parse
+
+def lambda_handler(event, context):
+    # get the current intent
+    intent_name = event['currentIntent']['name']
+    
+    # Dispatch to your bot's intent handlers
+    if intent_name == 'LunchMenuItem':
+        return get_menu_handler(event)                        
+                        </code></pre>
+                    </section>
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable> 
+# Event Handler for get menu intent.
+def get_menu_handler(event):
+    # get date
+    date = event['currentIntent']['slots']['Day']
+    
+    # get the day of week from the date
+    day_of_week = parse(date).weekday()
+    
+    # get the menu item for the meal and day of week
+    menu_item = get_menu_item(day_of_week)
+    
+    return create_response(event, menu_item)
+
+# Returns the menu item for a specific meal and day of week
+def get_menu_item(day_of_week):
+    # menu is represented as a dictinary
+    menu = ['salad', 'pizza', 'pasta', 'soup', 'hamburger', 'sushi', 'pizza']
+        
+    return menu[day_of_week]                      
+                        </code></pre>
+                    </section>
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+# Generates a valid response for AWS Lex
+def create_response(event, menu_item):
+    return {
+        'sessionAttributes': event['sessionAttributes'],
+        'dialogAction':{
+            'type':'Close',
+            'fulfillmentState': 'Fulfilled',
+            'message':{
+                'contentType':'PlainText',
+                'content':menu_item
+            }
+        }
+    }                    
+                        </code></pre>
+                    </section>                                    
+                </section>
+
+                <section>
+                    <h2>Testing Lambda Function</h2>
+                    <small>
+                    <ul>
+                        <li>Click on <i>Select a test event</i> &rArr; Configure Test Events</li>
+                        <li>For Event Name, provide a name for this test case</li>
+                        <li>Amazon Lex event that is passed to a Lambda function in a specific format:</li>
+                    </ul>
+                    <pre><code class="hljs" data-trim contenteditable>
+{
+    "currentIntent": {
+        "slots": {
+        "slotDay": "2030-11-08"
+        },
+        "name": "LunchMenuItem",
+        "confirmationStatus": "None"
+    },
+    "bot": {
+        "alias": "$LATEST",
+        "version": "$LATEST",
+        "name": "MakeAppointment"
+    },
+    "userId": "John",
+    "invocationSource": "DialogCodeHook",
+    "outputDialogMode": "Text",
+    "messageVersion": "1.0",
+    "sessionAttributes": {}
+}
+                    </code></pre>
+                    </small>
+                </section>
+
+                <section>
+                    <h2>Lex + Lambda Function</h2>
+                    <small>
+                    <ul>
+                        <li>Click on Services &rArr; Amazon Lex</li>
+                        <li>Click on your bot (e.g. <yourname>LunchBot)</li>
+                        <li>Under Fulfillment, select AWS Lambda Function</li>
+                        <li><i>Select your lambda function (e.g. &lt;yourname&gt;LunchFunction)</i></li>
+                        <li>Click Build</li>
+                        <li>Try it out!</li>
+                    </ul>
+                    </small>
+                </section>
+
+                <section>
+                    <h2>Custom Slot Type</h2>
+                    <small>
+                    <ul>
+                        <li>Click on Slot Types</li>
+                        <li>Slot Type Name: MealType</li>
+                        <li>Slot Resolution: Restrict to Slot values and Synonyms</li>
+                        <li>Values:</li>
+                        <ul>
+                                <li>Lunch</li>
+                                <li>Breakfast</li>
+                                <li>Dinner</li>
+                        </ul>
+                        <li>Click on Add Slot To Intent</li>
+                        <li><i>Add new slot to the intent as we did previously with Day slot.</i></li>
+                    </ul>
+                    </small>
+                </section>
+
+                <section>
+                        <section>
+                            <h2>Creating Lambda Function</h2>
+                            <h4>With Custom Slot Type</h4>
+                            <pre><code class="hljs" data-trim contenteditable>
+import datetime
+from dateutil.parser import parse
+
+def lambda_handler(event, context):
+    
+    # get the current intent
+    intent_name = event['currentIntent']['name']
+
+    # Dispatch to your bot's intent handlers
+    if intent_name == 'GetMenuIntent':
+        return get_menu_item_handler(event)                
+                            </code></pre>
+                        </section>
+                        <section>
+                            <pre><code class="hljs" data-trim contenteditable>
+# Event Handler for get menu intent.
+def get_menu_item_handler(event):
+    # get the meal and date
+    meal = event['currentIntent']['slots']['slotMeal']
+    date = event['currentIntent']['slots']['slotDay']
+    
+    # get the day of week from the date
+    day_of_week = parse(date).weekday()
+    
+    # get the menu item for the meal and day of week
+    menu_item = get_menu_item(meal, day_of_week)
+    
+    return create_response(event, menu_item)        
+
+# Returns the menu item for a specific meal and day of week
+def get_menu_item(meal, day_of_week):
+    # menu is represented as a dictinary
+    menu = {   'breakfast':['cereal', 'fruit bowl', 'eggs', 'pb&j', 'ham sandwich', 'cereal', 'cereal'],
+                'lunch':['salad', 'pizza', 'pasta', 'soup', 'hamburger', 'sushi', 'pizza'],
+                'dinner':['steak', 'salmon', 'spaghetti', 'fish and chips', 'chicken', 'turkey', 'ceaser salad']
+            }
+        
+    return menu[meal][day_of_week]              
+                            </code></pre>
+                        </section>
+                        <section>
+                            <pre><code class="hljs" data-trim contenteditable>
+# Generates a valid response for AWS Lex
+def create_response(event, menu_item):
+    return {
+        'sessionAttributes': event['sessionAttributes'],
+        'dialogAction':{
+            'type':'Close',
+            'fulfillmentState': 'Fulfilled',
+            'message':{
+                'contentType':'PlainText',
+                'content':menu_item
+            }
+        }
+    }
+                            </code></pre>
+                        </section>
+                        <section>
+                            <h2>Testing Lambda Function</h2>
+                            <small>
+                            <ul>
+                                <li>Click on <i>Select a test event</i> &rArr; Configure Test Events</li>
+                                <li>For Event Name, provide a name for this test case</li>
+                                <li>Amazon Lex event that is passed to a Lambda function in a specific format:</li>
+                            </ul>
+                            <pre><code class="hljs" data-trim contenteditable>
+{
+    "currentIntent": {
+        "slots": {
+        "slotDay": "2030-11-08",
+        "slotMeal": "dinner"
+        },
+        "name": "GetMenuIntent",
+        "confirmationStatus": "None"
+    },
+    "bot": {
+        "alias": "$LATEST",
+        "version": "$LATEST",
+        "name": "MakeAppointment"
+    },
+    "userId": "John",
+    "invocationSource": "DialogCodeHook",
+    "outputDialogMode": "Text",
+    "messageVersion": "1.0",
+    "sessionAttributes": {}
+}
+                            </code></pre>
+                            </small>
+                        </section>                                  
+                    </section>
+
+                    <section>
+                        <h2>Additional Resources:</h2>
+                    </section>
+
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
