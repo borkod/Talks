@@ -1,9 +1,7 @@
-### Building Chatbot with Amazon Lex and Amazon Lambda
-
-#### SHAD Program at Carleton University
+### Introduction To Markdown
 
 #### Ottawa, ON
 
-#### Tuesday, July 17, 2018
+#### Thursday, Nov 6, 2019
 
-A short tutorial demonstrating use of Amazon Lex and Amazon Lambda to build a simple Python based chatbot that provides food menu items.
+A short introduction on markdown presented at a workplace lunch-and-learn.

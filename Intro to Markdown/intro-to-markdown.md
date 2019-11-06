@@ -16,6 +16,7 @@ _[1 minutes]_
 * Markdown Syntax
 * Markdown Tools
 * Markdown Resources
+* Demo
 
 =====
 
@@ -191,3 +192,5 @@ NOTES:
 _[2 minutes]_
 
 =====
+
+### Questions / Comments
