@@ -14,7 +14,6 @@ _[1 minutes]_
 * What is Markdown?
 * Why use Markdown?
 * Markdown Syntax
-* Markdown Tools
 * Markdown Resources
 * Demo
 
@@ -26,7 +25,7 @@ _[1 minutes]_
 > Markdown is a lightweight markup language with plain text formatting syntax.
 </p>
 * Markdown is one of the world’s most popular markup languages
-
+* Markdown is a text-to-HTML conversion tool for web writers.
 
 NOTES:
 _[2 minutes]_
@@ -34,26 +33,36 @@ _[2 minutes]_
 - Using Markdown is different than using a WYSIWYG editor.
 - In an application like Microsoft Word, you click buttons to format words and phrases, and the changes are visible immediately.
 - Markdown isn’t like that. When you create a Markdown-formatted file, you add Markdown syntax to the text to indicate which words and phrases should look different.
+- The idea is that a Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions.
 
 =====
 
 ### Why use Markdown?
 
-Here we'll have a link:
-
-[Some Link](https://www.b3o.ca)
+- Markdown allows you to write using an *easy-to-read, easy-to-write* plain text format
+- *Readability* is emphasized above all else.
+- Can be *transformed* into a variety of commonly used publishing formats (e.g. PDF, HTML, Emails)
+- Readable on virtually *all devices*
+- *Future proof* - no file format compatibility challenges
+- Commonly used to write formatted pages across various platforms like StackOverflow, Github.
 
 NOTES:
 _[2 minutes]_
 
-- Promises have been in browser and Node for 2 years, yet I think there still seems to be this aversion or at least lack of will to adopt them and use them.
-- Bluebird and Q still popular Promise libraries, which just leads to fragmantation, which will only cause problems in future
-- Express still order of magnitude more popular than Koa, the Promise-based spiritual successor to Express.
-- This is due partly to technical reasons. Node core API is callback-based because maps nicely to underlying v8 platform, and so since it's the root API that everyone has to use, the paradigm carries through into the user land.
-- But Promise-based Node will come eventually.
-- Similarly `XHR` and ajax is event / callback based, and `fetch()` adoption lagging
-- Technical and comminity issues
+- Readability is emphasized above all else.
+- A Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions.
+- HTML is a publishing format; Markdown is a writing format.
+- Markdown’s formatting syntax only addresses issues that can be conveyed in plain text.
+- For any markup that is not covered by Markdown’s syntax, you simply use HTML itself.
+- The idea is that a Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions.
 
+=====
+
+### Markdown Basics
+
+* Create a text file with an **.md** extension (for example, example.md.)
+* You can use any text editor.
+  
 =====
 
 ### Markdown Syntax
@@ -62,9 +71,6 @@ _[2 minutes]_
 |Syntax|Alternate|Result|
 |------|---------|------|
 |`# Heading 1`|Heading 1<br>=========|<h1>Heading 1</h1>|
-
-NOTES:
-_[2 minutes]_
 
 =====
 
@@ -147,6 +153,27 @@ print "Hello World!"
 
 =====
 
+## Markdown Syntax
+#### HTML
+<p align="left">
+`` ``` ``
+<br>`<span style="color:red;">Use HTML to change style!</span>`
+<br>`` ``` ``
+</p>
+_____
+<span style="color:red;">Use HTML to change style!</span>
+
+NOTES:
+_[2 minutes]_
+
+- For any markup that is not covered by Markdown’s syntax, you simply use HTML itself.
+- Block-level HTML elements — e.g. div, table, pre, p, etc. — must be separated from surrounding content by blank lines, and the start and end tags of the block should not be indented with tabs or spaces.
+- You can’t use Markdown-style emphasis inside an HTML block.
+- Span-level HTML tags — e.g. span, cite, or del — can be used anywhere in a Markdown paragraph, list item, or header.
+- Unlike block-level HTML tags, Markdown syntax is processed within span-level tags.
+
+=====
+
 ### Markdown Resources
 #### Editors
 
@@ -187,9 +214,7 @@ There are also many online editors available that work right in your browser!
 - [Markdown Tutorial](https://www.markdowntutorial.com/)
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 - [The 10 Best Markdown Editors](https://www.shopify.ca/partners/blog/10-of-the-best-markdown-editors)
-
-NOTES:
-_[2 minutes]_
+- [Pandoc Conversion Tool](https://pandoc.org/index.html)
 
 =====
 
